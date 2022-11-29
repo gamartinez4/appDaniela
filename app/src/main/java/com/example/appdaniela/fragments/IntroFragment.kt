@@ -18,6 +18,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.appdaniela.MainActivity
 import com.example.appdaniela.adapters.GitReposAdapter
 import com.example.appdaniela.adapters.PagingLoadStateAdapter
 import kotlinx.coroutines.flow.collectLatest
@@ -55,7 +56,10 @@ class IntroFragment : Fragment() {
             }
         }
 
-        introViewModel.getListRepost()
+        if((activity as MainActivity).fisrtEnter){
+            introViewModel.getListRepost()
+            (activity as MainActivity).fisrtEnter = false
+        }
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collectLatest {
                 binding.swipeRefresh.isRefreshing = it.refresh is LoadState.Loading

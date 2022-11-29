@@ -66,12 +66,5 @@ class IntroViewModelTest {
             result shouldEqual pagingData
             verify(introRepository).getRepos()
         }
-
-    @Test
-    fun validateGetPaymentsResult() {
-
-        viewModel.validateResult(mockedGitData)
-
-        viewModel.pagingData.getOrAwaitValue() shouldEqual mockedGit
-    }
+    
 }
