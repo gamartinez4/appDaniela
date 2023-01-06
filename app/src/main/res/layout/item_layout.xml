@@ -6,7 +6,7 @@
    <data>
        <variable
            name="gitItem"
-           type="com.example.appdaniela.models.GitRepListInfo" />
+           type="com.example.appdaniela.models.RoomModel" />
    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{gitItem.owner.login}"
+            android:text="@{gitItem.login}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

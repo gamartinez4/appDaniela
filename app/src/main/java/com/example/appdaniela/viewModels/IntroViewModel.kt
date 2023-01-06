@@ -10,6 +10,8 @@ import com.example.appdaniela.models.GitRepModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.appdaniela.models.Result
+import com.example.appdaniela.models.RoomModel
+import com.example.appdaniela.utils.roomDb.daos.RoomModelDao
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 
@@ -17,8 +19,8 @@ class IntroViewModel(
     private val getListGitReposAPI:GetListGitReposAPI
     ): ViewModel()
 {
-    private val _pagingData = MutableLiveData<PagingData<GitRepListInfo>>()
-    val pagingData: LiveData<PagingData<GitRepListInfo>>
+    private val _pagingData = MutableLiveData<PagingData<RoomModel>>()
+    val pagingData: LiveData<PagingData<RoomModel>>
         get() = _pagingData
 
     fun getListRepost(){
@@ -27,11 +29,10 @@ class IntroViewModel(
                .cachedIn(this)
                .distinctUntilChanged()
                .collectLatest { validateResult(it) }
-
         }
     }
 
-    fun validateResult(result:PagingData<GitRepListInfo>){
+    fun validateResult(result:PagingData<RoomModel>){
         viewModelScope.launch(Dispatchers.Main) {
             _pagingData.value = result
         }

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appdaniela.MainActivity
 import com.example.appdaniela.adapters.GitReposAdapter
 import com.example.appdaniela.adapters.PagingLoadStateAdapter
+import com.example.appdaniela.models.RoomModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,7 +31,7 @@ class IntroFragment : Fragment() {
     private val introViewModel:IntroViewModel by viewModel()
 
     private val adapter = GitReposAdapter()
-    private val pagingDataObserver = Observer<PagingData<GitRepListInfo>> { handlePagingData(it) }
+    private val pagingDataObserver = Observer<PagingData<RoomModel>> { handlePagingData(it) }
     private lateinit var binding: FragmentIntroBinding
 
     override fun onCreateView(
@@ -72,7 +73,7 @@ class IntroFragment : Fragment() {
         introViewModel.pagingData.observe(viewLifecycleOwner, pagingDataObserver)
     }
 
-    private fun handlePagingData(pagingData: PagingData<GitRepListInfo>){
+    private fun handlePagingData(pagingData: PagingData<RoomModel>){
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.submitData(pagingData)
         }
