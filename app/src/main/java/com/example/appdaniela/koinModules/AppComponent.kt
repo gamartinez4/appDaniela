@@ -14,7 +14,7 @@ val introModule = module {
 
 fun appComponent(baseUrlApiWallet: String, context: Context): List<Module> {
     return listOf(
-        createRemoteModule(baseUrlApiWallet,context),
+        createRemoteModule(baseUrlApiWallet),
         repositoryModule,
         introModule
     )

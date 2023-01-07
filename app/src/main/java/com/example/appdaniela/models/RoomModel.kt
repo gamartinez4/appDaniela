@@ -13,7 +13,7 @@ data class RoomModel (
     val private:String,
     val login:String,
     val url:String
-    )
+    ):Serializable
 
 fun GitRepListInfo.gitRepListInfo2RoomModel():RoomModel{
     return RoomModel(

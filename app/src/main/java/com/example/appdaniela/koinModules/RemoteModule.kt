@@ -16,22 +16,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 fun createRemoteModule(
-    baseUrl:String, context: Context
+    baseUrl:String
 ) = module {
     single { createService(get()) }
     single { createRetrofit(get(), baseUrl) }
     single { createOkHttpClient(false) }
-    single { provideDb(androidContext()) }
+    single { DataBaseProject.buildDatabase(androidContext()) }
 }
 
 fun createService(retrofit: Retrofit): ApiServices {
     return retrofit.create(ApiServices::class.java)
 }
-
-fun provideDb(context: Context): DataBaseProject = Room.databaseBuilder(
-        context, DataBaseProject::class.java, "Model.db")
-    .build()
-
 
 fun createRetrofit(okHttpClient: OkHttpClient, url: String): Retrofit {
     return Retrofit.Builder()

@@ -8,6 +8,5 @@ import com.example.appdaniela.models.RoomModel
 import kotlinx.coroutines.flow.Flow
 
 interface IntroRepository {
-
     suspend fun getRepos(): Flow<PagingData<RoomModel>>
 }
