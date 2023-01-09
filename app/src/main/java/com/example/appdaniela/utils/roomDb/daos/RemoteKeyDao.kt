@@ -1,10 +1,12 @@
 package com.example.appdaniela.utils.roomDb.daos
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.appdaniela.models.RemoteKey
 
+@Dao
 interface RemoteKeyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

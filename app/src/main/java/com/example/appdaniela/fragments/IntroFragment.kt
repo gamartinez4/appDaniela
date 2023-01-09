@@ -22,6 +22,7 @@ import com.example.appdaniela.MainActivity
 import com.example.appdaniela.adapters.GitReposAdapter
 import com.example.appdaniela.adapters.PagingLoadStateAdapter
 import com.example.appdaniela.models.RoomModel
+import com.example.appdaniela.models.ToNoDbModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,7 +54,7 @@ class IntroFragment : Fragment() {
                 footer = PagingLoadStateAdapter(this)
             )
             onClickFunction = {
-                findNavController().navigate(IntroFragmentDirections.actionIntroToDetail(it))
+                findNavController().navigate(IntroFragmentDirections.actionIntroToDetail(it.ToNoDbModel()))
             }
         }
 

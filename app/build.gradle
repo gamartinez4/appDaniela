@@ -48,6 +48,7 @@ android {
             includeAndroidResources = true
         }
     }
+
 }
 
 dependencies {
@@ -128,7 +129,7 @@ dependencies {
 
     def paging_version = "3.1.1"
 
-    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'

@@ -1,5 +1,6 @@
 package com.example.appdaniela.adapters
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -44,6 +45,7 @@ class GitReposAdapter: PagingDataAdapter<RoomModel,  GitReposAdapter.ItemLayoutV
         override fun areItemsTheSame(oldItem:  RoomModel, newItem:  RoomModel) =
             oldItem.id == newItem.id
 
+        @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem:  RoomModel, newItem:  RoomModel) =
             oldItem == newItem
     }

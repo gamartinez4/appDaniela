@@ -23,7 +23,7 @@ class IntroRepositoryImpl(
     @ExperimentalPagingApi
     override suspend fun getRepos(): Flow<PagingData<RoomModel>> {
         return Pager(
-            config = PagingConfig(pageSize = 20, prefetchDistance = 2),
+            config = PagingConfig(pageSize = 10, prefetchDistance = 2),
             remoteMediator = PagerMediator(apiServices,dataBase) ,
             pagingSourceFactory = {dataBase.getRoomModelDao().getAll()}
         ).flow
