@@ -28,7 +28,7 @@
 
         <argument
             android:name="gitItemArg"
-            app:argType="com.example.appdaniela.models.RoomModelNoDb" />
+            app:argType="com.example.appdaniela.models.RoomModel" />
     </fragment>
 
 </navigation>

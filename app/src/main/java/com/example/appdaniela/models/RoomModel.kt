@@ -12,26 +12,12 @@ data class RoomModel(
     var private: String,
     var login: String,
     var url: String
-){
+):Serializable
+{
     constructor(): this("","","","","","")
 }
 
-data class RoomModelNoDb (
-    val id:String,
-    val name:String,
-    val description:String,
-    val private:String,
-    val login:String,
-    val url:String
-):Serializable
 
-fun RoomModel.ToNoDbModel():RoomModelNoDb {
-    return RoomModelNoDb(id=id,name=name,description=description,private=private,login=login,url=url)
-}
-
-fun RoomModelNoDb.ToDbModel():RoomModel{
-    return RoomModel(id=id,name=name,description=description,private=private,login=login,url=url)
-}
 
 fun GitRepListInfo.gitRepListInfo2RoomModel():RoomModel{
     return RoomModel(
