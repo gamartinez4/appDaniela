@@ -10,11 +10,9 @@ data class RoomModel(
     var title: String = "",
     var imageUrl:String = "",
     var description:String = "",
-    var prices:String = ""
+    var prices:String = "",
+    var favourite:Boolean = false
 ):Serializable
-
-
-
 
 fun Comic.gitRepListInfo2RoomModel():RoomModel{
     return RoomModel(

@@ -12,6 +12,9 @@ interface RoomModelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(RoomModels: List<RoomModel>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertElement(RoomModel:RoomModel)
+
     @Query("SELECT * FROM roomModel")
     fun getAll(): PagingSource<Int, RoomModel>
 
