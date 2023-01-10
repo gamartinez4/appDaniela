@@ -12,8 +12,8 @@ interface RoomModelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(RoomModels: List<RoomModel>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertElement(RoomModel:RoomModel)
+    @Query("UPDATE roomModel SET favourite=:favourite WHERE id = :id")
+    suspend fun insertElement(favourite:Boolean, id:String)
 
     @Query("SELECT * FROM roomModel")
     fun getAll(): PagingSource<Int, RoomModel>

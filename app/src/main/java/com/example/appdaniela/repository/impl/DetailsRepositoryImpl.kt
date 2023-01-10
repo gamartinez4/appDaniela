@@ -5,8 +5,8 @@ import com.example.appdaniela.repository.interfaces.DetailsRepository
 import com.example.appdaniela.utils.roomDb.daos.RoomModelDao
 
 class DetailsRepositoryImpl( private val roomModelDao: RoomModelDao) : DetailsRepository {
-    override suspend fun setRoomModel(roomModel: RoomModel) {
-        roomModelDao.insertElement(roomModel)
+    override suspend fun setRoomModel(favourite:Boolean,id:String) {
+        roomModelDao.insertElement(favourite,id)
     }
 
 }

@@ -14,9 +14,9 @@ class DetailsViewModel(
 
     val selectedValue = MutableLiveData<RoomModel>()
 
-    fun setRoomModel(roomModel: RoomModel){
+    fun setRoomModel(favourite:Boolean,id:String){
         viewModelScope.launch(Dispatchers.IO) {
-            setRoomModelLocal.execute(roomModel)
+            setRoomModelLocal.execute(favourite,id)
         }
     }
 

@@ -42,8 +42,8 @@ class DetailFragment : Fragment() {
             val selectedValue = detailsViewModel.selectedValue.value
             selectedValue!!.favourite = !selectedValue.favourite
             detailsViewModel.selectedValue.value = selectedValue
-            detailsViewModel.setRoomModel(selectedValue)
-        }
+            detailsViewModel.setRoomModel(selectedValue.favourite,selectedValue.id)
+            }
     }
 
-    }
+}
