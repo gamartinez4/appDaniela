@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import com.example.appdaniela.R
 import com.example.appdaniela.databinding.FragmentIntroBinding
-import com.example.appdaniela.models.GitRepListInfo
 import com.example.appdaniela.viewModels.IntroViewModel
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope

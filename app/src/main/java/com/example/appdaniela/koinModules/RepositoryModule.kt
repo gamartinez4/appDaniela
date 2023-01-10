@@ -6,5 +6,5 @@ import com.example.appdaniela.utils.roomDb.DataBaseProject
 import org.koin.dsl.module
 
 val repositoryModule = module {
-   factory { IntroRepositoryImpl(get(),get())  as IntroRepository }
+   factory { IntroRepositoryImpl(get(),get(),get())  as IntroRepository }
 }

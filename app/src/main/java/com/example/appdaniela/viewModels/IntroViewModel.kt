@@ -5,8 +5,6 @@ import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.appdaniela.domain.GetListGitReposAPI
-import com.example.appdaniela.models.GitRepListInfo
-import com.example.appdaniela.models.GitRepModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.appdaniela.models.Result

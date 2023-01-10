@@ -16,6 +16,7 @@ fun appComponent(baseUrlApiWallet: String, context: Context): List<Module> {
     return listOf(
         createRemoteModule(baseUrlApiWallet),
         repositoryModule,
+        localModule,
         introModule
     )
 }

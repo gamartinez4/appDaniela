@@ -3,6 +3,7 @@ package com.example.appdaniela.koinModules
 import android.content.Context
 import androidx.room.Room
 import com.example.appdaniela.proxy.ApiServices
+import com.example.appdaniela.remote.IntroRepoDataSource
 import com.example.appdaniela.utils.roomDb.DataBaseProject
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -21,7 +22,8 @@ fun createRemoteModule(
     single { createService(get()) }
     single { createRetrofit(get(), baseUrl) }
     single { createOkHttpClient(false) }
-    single { DataBaseProject.buildDatabase(androidContext()) }
+
+    factory { IntroRepoDataSource(get()) }
 }
 
 fun createService(retrofit: Retrofit): ApiServices {

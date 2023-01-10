@@ -8,7 +8,6 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appdaniela.databinding.ItemLayoutBinding
-import com.example.appdaniela.models.GitRepListInfo
 import com.example.appdaniela.models.RoomModel
 
 class GitReposAdapter: PagingDataAdapter<RoomModel,  GitReposAdapter.ItemLayoutViewHolder>(ItemComp) {
