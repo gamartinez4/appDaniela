@@ -42,10 +42,10 @@ class PagerMediator (
             when (response) {
 
                 is Result.Success -> {
-                    if (loadType == LoadType.REFRESH) {
-                        roomModelDao.deleteAll()
-                        remoteKeyDao.deleteAll()
-                    }
+                 //   if (loadType == LoadType.REFRESH) {
+                   //     roomModelDao.deleteAll()
+                     //   remoteKeyDao.deleteAll()
+                    // }
                     val prevKey = if (offset == 0) null else offset - 10
                     val nextKey = offset + 10
                     val modelsList = response.data.data.results

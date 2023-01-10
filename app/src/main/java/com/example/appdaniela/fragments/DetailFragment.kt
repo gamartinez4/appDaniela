@@ -43,7 +43,7 @@ class DetailFragment : Fragment() {
             selectedValue!!.favourite = !selectedValue.favourite
             detailsViewModel.selectedValue.value = selectedValue
             detailsViewModel.setRoomModel(selectedValue.favourite,selectedValue.id)
-            }
+        }
     }
 
 }
