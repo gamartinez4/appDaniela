@@ -66,6 +66,16 @@ class IntroFragment : Fragment() {
             }
         }
         startObserver()
+
+        binding.refresh.setOnClickListener{
+            introViewModel.deleteAllItems()
+            introViewModel.deleteAllKeys()
+            adapter.refresh()
+        }
+        binding.clear.setOnClickListener {
+            introViewModel.deleteNoneFavouriteFlag = true
+            introViewModel.deleteNoneFavouritesItems()
+        }
     }
 
     private fun startObserver() {

@@ -3,7 +3,7 @@ package com.example.appdaniela
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class MainActivity : AppCompatActivity() {
+class  MainActivity : AppCompatActivity() {
 
     var fisrtEnter = true
 

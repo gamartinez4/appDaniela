@@ -7,19 +7,15 @@ import java.io.Serializable
 @Entity(tableName = "roomModel")
 data class RoomModel(
     @PrimaryKey(autoGenerate = false) var id: String = "",
-    var title: String = "",
-    var imageUrl:String = "",
-    var description:String = "",
-    var prices:String = "",
-    var favourite:Boolean = false
+    var title:String = "",
+    var body:String = "",
+    var favourite:Boolean = false,
 ):Serializable
 
-fun Comic.gitRepListInfo2RoomModel():RoomModel{
+fun Post.gitRepListInfo2RoomModel():RoomModel{
     return RoomModel(
         id = id,
         title = title?:"" ,
-        imageUrl = if(images!!.isNotEmpty())"${images[0].path}.${images[0].extension}" else "https://imagenesparaperfildewasap.com/wp-content/uploads/no-hay-foto-3.png",
-        prices = if(prices!!.isNotEmpty())"${prices[0].price} ${prices[0].type}" else "No hay datos del precio",
-        description = if(description.isNullOrBlank())"No hay descripción" else description
+        body = body?:""
     )
 }

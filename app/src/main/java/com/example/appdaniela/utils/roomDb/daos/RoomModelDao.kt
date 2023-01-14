@@ -15,9 +15,12 @@ interface RoomModelDao {
     @Query("UPDATE roomModel SET favourite=:favourite WHERE id = :id")
     suspend fun insertElement(favourite:Boolean, id:String)
 
-    @Query("SELECT * FROM roomModel")
+    @Query("SELECT * FROM roomModel ORDER BY favourite DESC")
     fun getAll(): PagingSource<Int, RoomModel>
 
     @Query("DELETE FROM roomModel")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM roomModel WHERE favourite = 0")
+    suspend fun deleteAllNoneFavourite()
 }

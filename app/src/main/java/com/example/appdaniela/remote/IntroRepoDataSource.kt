@@ -1,6 +1,6 @@
 package com.example.appdaniela.remote
 
-import com.example.appdaniela.models.ResponseModel
+import com.example.appdaniela.models.Post
 import com.example.appdaniela.proxy.ApiServices
 import com.example.appdaniela.models.Result
 import com.example.appdaniela.proxy.handlers.parseError
@@ -8,15 +8,14 @@ import java.lang.Exception
 
 class IntroRepoDataSource (private val apiServices: ApiServices){
 
-    suspend fun getComicsSource(offset:String):Result<ResponseModel>{
+    suspend fun getPosts(start:String):Result<ArrayList<Post>>{
         try {
-            apiServices.getComics(offset = offset).run {
-                return if (isSuccessful && body() != null) Result.Success(body() as ResponseModel)
+            apiServices.getPosts(start = start).run {
+                return if (isSuccessful && body() != null) Result.Success(body() as ArrayList<Post>)
                 else Result.Failure(Exception(parseError(errorBody()).message))
             }
         }catch (e: Exception) {
             return Result.Failure(e)
         }
     }
-
 }

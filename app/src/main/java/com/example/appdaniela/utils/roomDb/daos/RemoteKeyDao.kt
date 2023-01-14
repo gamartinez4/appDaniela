@@ -18,4 +18,7 @@ interface RemoteKeyDao {
     @Query("DELETE FROM remote_keys")
     suspend fun deleteAll()
 
+    @Query("SELECT (SELECT COUNT(*) FROM remote_keys) == 0")
+    fun isEmpty(): Boolean
+
 }

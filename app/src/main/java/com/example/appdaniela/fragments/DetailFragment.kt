@@ -38,6 +38,10 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         detailsViewModel.selectedValue.value = args.gitItemArg
+        setFavouriteButton()
+    }
+
+    fun setFavouriteButton(){
         binding.favouriteBoton.setOnClickListener {
             val selectedValue = detailsViewModel.selectedValue.value
             selectedValue!!.favourite = !selectedValue.favourite

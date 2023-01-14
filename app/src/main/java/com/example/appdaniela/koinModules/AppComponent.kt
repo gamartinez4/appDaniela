@@ -1,8 +1,7 @@
 package com.example.appdaniela.koinModules
 
 import android.content.Context
-import com.example.appdaniela.domain.GetListGitReposAPI
-import com.example.appdaniela.domain.SetRoomModelLocal
+import com.example.appdaniela.domain.*
 import com.example.appdaniela.viewModels.DetailsViewModel
 import com.example.appdaniela.viewModels.IntroViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -11,7 +10,10 @@ import org.koin.dsl.module
 
 val introModule = module {
     factory { GetListGitReposAPI(get()) }
-    viewModel { IntroViewModel(get()) }
+    factory { DeleteNoneFavouriteItemsLocal(get()) }
+    factory { DeleteAllItemsLocal(get()) }
+    factory { DeleteAllKeysLocal(get()) }
+    viewModel { IntroViewModel(get(),get(),get(),get()) }
 }
 
 val detailsModule = module {
