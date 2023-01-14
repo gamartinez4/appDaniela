@@ -17,7 +17,8 @@ class PagerMediator(
     private val roomModelDao: RoomModelDao,
     private val remoteKeyDao: RemoteKeyDao,
     private val introRepoDataSource: IntroRepoDataSource,
-    private val viewModel: IntroViewModel
+    private val deleteNoneFavouriteItemsFun:()->Boolean,
+    private val setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit
 ) : RemoteMediator<Int, RoomModel>(){
 
     override suspend fun initialize(): InitializeAction = InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -36,8 +37,8 @@ class PagerMediator(
         }
 
         try {
-            if ((loadType == LoadType.REFRESH && remoteKeyDao.isEmpty()) || (loadType == LoadType.APPEND && !viewModel.deleteNoneFavouriteFlag)) {
-                viewModel.deleteNoneFavouriteFlag = false
+            if ((loadType == LoadType.REFRESH && remoteKeyDao.isEmpty()) || (loadType == LoadType.APPEND && !deleteNoneFavouriteItemsFun())) {
+                setDeleteNoneFavouriteItemsFlag(false)
                 val response = introRepoDataSource.getPosts(start = offset.toString())
                 var isEndOfList = false
                 when (response) {
@@ -113,9 +114,7 @@ class PagerMediator(
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()
-            ?.let {
-                     element -> remoteKeyDao.remoteKeysId(element.id)
-            }
+            ?.let { element -> remoteKeyDao.remoteKeysId(element.id) }
     }
 
 

@@ -14,5 +14,5 @@ interface IntroRepository {
 
     suspend fun deleteAllNoneFavourite()
 
-    suspend fun getRepos(viewModel: IntroViewModel): Flow<PagingData<RoomModel>>
+    suspend fun getRepos(deleteNoneFavouriteItemsFun:()->Boolean, setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit): Flow<PagingData<RoomModel>>
 }

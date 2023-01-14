@@ -32,10 +32,20 @@ class IntroRepositoryImpl(
 
 
     @ExperimentalPagingApi
-    override suspend fun getRepos(viewModel: IntroViewModel): Flow<PagingData<RoomModel>> {
+    override suspend fun getRepos(
+            deleteNoneFavouriteItemsFun:()->Boolean,
+            setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit)
+    : Flow<PagingData<RoomModel>> {
         return Pager(
             config = PagingConfig(pageSize = 10, prefetchDistance = 30),
-            remoteMediator = PagerMediator(roomModelDao,remoteKeyDao,introRepoDataSource,viewModel),
+            remoteMediator =
+                PagerMediator(
+                    roomModelDao,
+                    remoteKeyDao,
+                    introRepoDataSource,
+                    deleteNoneFavouriteItemsFun,
+                    setDeleteNoneFavouriteItemsFlag
+                ),
             pagingSourceFactory = {roomModelDao.getAll()}
         ).flow
     }

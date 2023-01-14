@@ -30,7 +30,7 @@ class IntroViewModel(
 
     fun getListRepost(){
         viewModelScope.launch(Dispatchers.IO) {
-           getListGitReposAPI.execute(this@IntroViewModel)
+           getListGitReposAPI.execute({deleteNoneFavouriteFlag},{deleteNoneFavouriteFlag = it})
                .cachedIn(this)
                .distinctUntilChanged()
                .collectLatest { validateResult(it) }
@@ -44,6 +44,7 @@ class IntroViewModel(
     }
 
     fun deleteNoneFavouritesItems(){
+        deleteNoneFavouriteFlag = true
         viewModelScope.launch(Dispatchers.IO) {
             deleteNoneFavouriteItemsLocal.execute()
         }
