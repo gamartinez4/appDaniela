@@ -13,7 +13,7 @@ val mockedGit = listOf(
         id="2",
         title = "Titlo2",
         body = "body2",
-        favourite = false
+        favourite = true
     ),PostDto(
         id="3",
         title = "Titlo3",

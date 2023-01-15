@@ -47,13 +47,10 @@ class IntroViewModelTest {
     private lateinit var getAllCommentsAPI : GetAllCommentsAPI
     private lateinit var getAllUsersAPI : GetAllUsersAPI
     private lateinit var setUsersLocal : SetUsersLocal
-    private lateinit var deleteUserLocal : DeleteUserLocal
 
     @Mock
     private lateinit var introRepository:IntroRepository
 
-    @Mock
-    private lateinit var detailsRepository:DetailsRepository
 
     @Before
     fun setUp() {
@@ -65,7 +62,7 @@ class IntroViewModelTest {
         getAllCommentsAPI = GetAllCommentsAPI(introRepository)
         getAllUsersAPI = GetAllUsersAPI(introRepository)
         setUsersLocal = SetUsersLocal(introRepository)
-        deleteUserLocal = DeleteUserLocal(detailsRepository)
+
         viewModel =
             IntroViewModel(
                     setPagingPostDataAPI,
@@ -77,22 +74,23 @@ class IntroViewModelTest {
                     getAllUsersAPI,
                     setUsersLocal
                 )
-
     }
 
+
     @Test
-    fun getTransactionsList() =
+    fun pagingPostTest() =
 
         mainCoroutineRule.runBlockingTest {
             val pagingData: Flow<PagingData<PostDto>> = flow {
                 mockedGit
             }
-            given(introRepository.setPagingPostData({false},{})).willReturn(pagingData)
 
-            val result = setPagingPostDataAPI.execute({false},{})
+            given(introRepository.setPagingPostData({true},{})).willReturn(pagingData)
+
+            val result = setPagingPostDataAPI.execute({true},{})
 
             result shouldEqual pagingData
-            verify(introRepository).setPagingPostData({false},{})
+            verify(introRepository).setPagingPostData({true},{})
         }
     
 }
