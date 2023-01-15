@@ -25,8 +25,9 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/refresh"
-            android:layout_width="171dp"
+            android:layout_width="200dp"
             android:layout_height="0dp"
+            style="@style/subtexto_solic"
             android:text="Refrescar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,9 +35,10 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/clear"
-            android:layout_width="171dp"
+            android:layout_width="200dp"
             android:layout_height="0dp"
-            android:text="Borrar"
+            style="@style/subtexto_solic"
+            android:text="Borrar no favoritos"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/swipe_refresh" />

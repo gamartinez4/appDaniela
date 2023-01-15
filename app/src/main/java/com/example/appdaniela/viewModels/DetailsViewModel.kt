@@ -73,15 +73,17 @@ class DetailsViewModel(
     }
 
     fun setFavouriteValueForPost(){
-        val selectedValueAux = selectedValue.value
-        selectedValueAux!!.favourite = !selectedValueAux.favourite
-        selectedValue.value = selectedValueAux
-        updateDtoFavouriteFromPostIdToDataBase(selectedValueAux.favourite,selectedValueAux.id)
+        selectedValue.value = selectedValue.value?.apply {
+            this.favourite = !this.favourite
+            this
+        }
+        updateDtoFavouriteFromPostIdToDataBase(
+            selectedValue.value!!.favourite,
+            selectedValue.value!!.id
+        )
     }
 
-    private fun emitUiState(
-        goBack:Boolean = false
-    ) {
+    private fun emitUiState(goBack:Boolean = false) {
         viewModelScope.launch(Dispatchers.Main) {
             _uiModel.value = DetailsUI(goBack)
         }
