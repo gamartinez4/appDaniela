@@ -17,7 +17,6 @@ val introModule = module {
     factory { GetAllCommentsAPI(get()) }
     factory { GetAllUsersAPI(get()) }
     factory { SetUsersLocal(get()) }
-    factory { DeleteUserLocal(get()) }
     viewModel { IntroViewModel(get(),get(),get(),get(),get(),get(),get(),get()) }
 }
 
@@ -25,7 +24,7 @@ val detailsModule = module {
     factory { SetPostDtoLocal(get()) }
     factory { SetPagingCommentDataAPI(get()) }
     factory { GetUserFromUserIdLocal(get()) }
-    factory {  }
+    factory { DeleteUserLocal(get()) }
     viewModel { DetailsViewModel(get(),get(),get(),get()) }
 }
 

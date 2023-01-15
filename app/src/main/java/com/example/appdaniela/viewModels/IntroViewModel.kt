@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 class IntroViewModel(
     private val setPagingPostDataAPI:SetPagingPostDataAPI,
     private val deleteNoneFavouriteItemsLocal: DeleteNoneFavouriteItemsLocal,
-    private val deleteAllItemsLocal: DeleteAllPostsLocal,
+    private val deleteAllPostsLocal: DeleteAllPostsLocal,
     private val deleteAllKeysLocal: DeleteAllKeysLocal,
     private val getAllCommentsAPI: GetAllCommentsAPI,
     private val setCommentsLocal: SetCommentsLocal,
@@ -56,7 +56,7 @@ class IntroViewModel(
 
     fun deleteAllPostsOfDataBase(){
         viewModelScope.launch(Dispatchers.IO) {
-            deleteAllItemsLocal.execute()
+            deleteAllPostsLocal.execute()
         }
     }
 

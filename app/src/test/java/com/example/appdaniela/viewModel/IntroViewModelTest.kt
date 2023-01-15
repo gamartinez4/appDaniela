@@ -1,8 +1,9 @@
 package com.example.appdaniela.viewModel
 
 import androidx.paging.PagingData
-import com.example.appdaniela.domain.SetPagingPostDataAPI
-import com.example.appdaniela.models.GitRepListInfo
+import com.example.appdaniela.domain.*
+import com.example.appdaniela.models.PostDto
+import com.example.appdaniela.repository.interfaces.DetailsRepository
 import com.example.appdaniela.repository.interfaces.IntroRepository
 import com.example.appdaniela.viewModels.IntroViewModel
 import com.nhaarman.mockitokotlin2.given
@@ -38,15 +39,44 @@ class IntroViewModelTest {
     var mainCoroutineRule =
         MainCoroutineRule()
 
-    private lateinit var getListGitReposAPI: SetPagingPostDataAPI
+    private lateinit var setPagingPostDataAPI: SetPagingPostDataAPI
+    private lateinit var deleteNoneFavouriteItemsLocal: DeleteNoneFavouriteItemsLocal
+    private lateinit var deleteAllPostsLocal: DeleteAllPostsLocal
+    private lateinit var deleteAllKeysLocal : DeleteAllKeysLocal
+    private lateinit var setCommentsLocal :SetCommentsLocal
+    private lateinit var getAllCommentsAPI : GetAllCommentsAPI
+    private lateinit var getAllUsersAPI : GetAllUsersAPI
+    private lateinit var setUsersLocal : SetUsersLocal
+    private lateinit var deleteUserLocal : DeleteUserLocal
 
     @Mock
     private lateinit var introRepository:IntroRepository
 
+    @Mock
+    private lateinit var detailsRepository:DetailsRepository
+
     @Before
     fun setUp() {
-        getListGitReposAPI = SetPagingPostDataAPI(introRepository)
-        viewModel = IntroViewModel(getListGitReposAPI)
+        setPagingPostDataAPI = SetPagingPostDataAPI(introRepository)
+        deleteNoneFavouriteItemsLocal = DeleteNoneFavouriteItemsLocal(introRepository)
+        deleteAllPostsLocal = DeleteAllPostsLocal(introRepository)
+        deleteAllKeysLocal = DeleteAllKeysLocal(introRepository)
+        setCommentsLocal = SetCommentsLocal(introRepository)
+        getAllCommentsAPI = GetAllCommentsAPI(introRepository)
+        getAllUsersAPI = GetAllUsersAPI(introRepository)
+        setUsersLocal = SetUsersLocal(introRepository)
+        deleteUserLocal = DeleteUserLocal(detailsRepository)
+        viewModel =
+            IntroViewModel(
+                    setPagingPostDataAPI,
+                    deleteNoneFavouriteItemsLocal,
+                    deleteAllPostsLocal,
+                    deleteAllKeysLocal,
+                    getAllCommentsAPI,
+                    setCommentsLocal,
+                    getAllUsersAPI,
+                    setUsersLocal
+                )
 
     }
 
@@ -54,15 +84,15 @@ class IntroViewModelTest {
     fun getTransactionsList() =
 
         mainCoroutineRule.runBlockingTest {
-            val pagingData: Flow<PagingData<GitRepListInfo>> = flow {
+            val pagingData: Flow<PagingData<PostDto>> = flow {
                 mockedGit
             }
-            given(introRepository.setPagingPostData()).willReturn(pagingData)
+            given(introRepository.setPagingPostData({false},{})).willReturn(pagingData)
 
-            val result = getListGitReposAPI.execute()
+            val result = setPagingPostDataAPI.execute({false},{})
 
             result shouldEqual pagingData
-            verify(introRepository).setPagingPostData()
+            verify(introRepository).setPagingPostData({false},{})
         }
     
 }

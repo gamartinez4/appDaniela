@@ -1,30 +1,24 @@
 package com.example.appdaniela.viewModel
 
 import androidx.paging.PagingData
-import com.example.appdaniela.models.GitOwner
-import com.example.appdaniela.models.GitRepListInfo
+import com.example.appdaniela.models.PostDto
 
 val mockedGit = listOf(
-    GitRepListInfo(
-        id = "1230456",
-        name = "ejemplo/kotlin",
-        description = "Descripcion ejemplo",
-        private = "true",
-        owner = GitOwner(login = "123",url = "www.github/ejemplo.com")
-    ),
-    GitRepListInfo(
-        id = "112456",
-        name = "ejemplo/java",
-        description = "Descripcion ejemplo 2",
-        private = "false",
-        owner = GitOwner(login = "456",url = "www.github/ejemplo2.com")
-    ),
-    GitRepListInfo(
-        id = "1230456",
-        name = "ejemplo/python",
-        description = "Descripcion ejemplo3",
-        private = "false",
-        owner = GitOwner(login = "789",url = "www.github/ejemplo3.com")
+    PostDto(
+        id="1",
+        title = "Titlo1",
+        body = "body1",
+        favourite = false
+    ),PostDto(
+        id="2",
+        title = "Titlo2",
+        body = "body2",
+        favourite = false
+    ),PostDto(
+        id="3",
+        title = "Titlo3",
+        body = "body3",
+        favourite = false
     )
 )
 
