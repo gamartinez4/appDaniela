@@ -7,16 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.appdaniela.MainActivity
 import com.example.appdaniela.R
+import com.example.appdaniela.adapters.CommentAdapter
 import com.example.appdaniela.adapters.PagingLoadStateAdapter
 import com.example.appdaniela.databinding.FragmentDetailBinding
-import com.example.appdaniela.databinding.FragmentIntroBinding
-import com.example.appdaniela.models.RoomModel
+import com.example.appdaniela.models.CommentDto
+import com.example.appdaniela.models.DetailsUI
+import com.example.appdaniela.models.PostDto
 import com.example.appdaniela.viewModels.DetailsViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment : Fragment() {
@@ -24,6 +30,10 @@ class DetailFragment : Fragment() {
     private val detailsViewModel: DetailsViewModel by viewModel()
     private lateinit var binding: FragmentDetailBinding
     private val args: DetailFragmentArgs by navArgs()
+    private val adapter =  CommentAdapter()
+
+    private val pagingDataObserver = Observer<PagingData<CommentDto>> { handlePagingData(it) }
+    private val uiModelObserver = Observer<DetailsUI> { handleUi(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,17 +47,41 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startObserver()
         detailsViewModel.selectedValue.value = args.gitItemArg
-        setFavouriteButton()
+        detailsViewModel.setPagingCommentData(args.gitItemArg)
+        detailsViewModel.getUserFromUserId(args.gitItemArg.userId)
+
+        binding.recyclerComment.layoutManager = LinearLayoutManager(requireContext())
+        with(adapter){
+            binding.recyclerComment.adapter = withLoadStateHeaderAndFooter(
+                header = PagingLoadStateAdapter(this),
+                footer = PagingLoadStateAdapter(this)
+            )
+        }
+
+        binding.favouriteBoton.setOnClickListener {
+            detailsViewModel.setFavouriteValueForPost()
+        }
+
+        binding.erasePost.setOnClickListener {
+            detailsViewModel.deletePostFromPostList(args.gitItemArg.id)
+        }
     }
 
-    fun setFavouriteButton(){
-        binding.favouriteBoton.setOnClickListener {
-            val selectedValue = detailsViewModel.selectedValue.value
-            selectedValue!!.favourite = !selectedValue.favourite
-            detailsViewModel.selectedValue.value = selectedValue
-            detailsViewModel.setRoomModel(selectedValue.favourite,selectedValue.id)
+    private fun handlePagingData(pagingData: PagingData<CommentDto>){
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.submitData(pagingData)
         }
+    }
+
+    private fun startObserver() {
+        detailsViewModel.pagingData.observe(viewLifecycleOwner, pagingDataObserver)
+        detailsViewModel.uiModel.observe(viewLifecycleOwner, uiModelObserver)
+    }
+
+    private fun handleUi(detailsUI: DetailsUI){
+        if(detailsUI.goBack)findNavController().popBackStack()
     }
 
 }

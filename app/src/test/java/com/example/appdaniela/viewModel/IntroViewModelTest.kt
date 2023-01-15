@@ -1,8 +1,7 @@
 package com.example.appdaniela.viewModel
 
-import androidx.lifecycle.Observer
 import androidx.paging.PagingData
-import com.example.appdaniela.domain.GetListGitReposAPI
+import com.example.appdaniela.domain.SetPagingPostDataAPI
 import com.example.appdaniela.models.GitRepListInfo
 import com.example.appdaniela.repository.interfaces.IntroRepository
 import com.example.appdaniela.viewModels.IntroViewModel
@@ -20,7 +19,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -40,14 +38,14 @@ class IntroViewModelTest {
     var mainCoroutineRule =
         MainCoroutineRule()
 
-    private lateinit var getListGitReposAPI: GetListGitReposAPI
+    private lateinit var getListGitReposAPI: SetPagingPostDataAPI
 
     @Mock
     private lateinit var introRepository:IntroRepository
 
     @Before
     fun setUp() {
-        getListGitReposAPI = GetListGitReposAPI(introRepository)
+        getListGitReposAPI = SetPagingPostDataAPI(introRepository)
         viewModel = IntroViewModel(getListGitReposAPI)
 
     }
@@ -59,12 +57,12 @@ class IntroViewModelTest {
             val pagingData: Flow<PagingData<GitRepListInfo>> = flow {
                 mockedGit
             }
-            given(introRepository.getRepos()).willReturn(pagingData)
+            given(introRepository.setPagingPostData()).willReturn(pagingData)
 
             val result = getListGitReposAPI.execute()
 
             result shouldEqual pagingData
-            verify(introRepository).getRepos()
+            verify(introRepository).setPagingPostData()
         }
     
 }

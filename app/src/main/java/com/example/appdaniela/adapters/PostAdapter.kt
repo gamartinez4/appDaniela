@@ -1,20 +1,19 @@
 package com.example.appdaniela.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appdaniela.databinding.ItemLayoutBinding
-import com.example.appdaniela.models.RoomModel
+import com.example.appdaniela.databinding.PostItemLayoutBinding
+import com.example.appdaniela.models.PostDto
 
-class GitReposAdapter: PagingDataAdapter<RoomModel,  GitReposAdapter.ItemLayoutViewHolder>(ItemComp) {
+class PostAdapter: PagingDataAdapter<PostDto,  PostAdapter.ItemLayoutViewHolder>(ItemComp) {
 
-    var onClickFunction:((RoomModel)->Unit)? = null
+    var onClickFunction:((PostDto)->Unit)? = null
 
-    inner class ItemLayoutViewHolder(private val binding: ItemLayoutBinding) :
+    inner class ItemLayoutViewHolder(private val binding: PostItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -23,14 +22,14 @@ class GitReposAdapter: PagingDataAdapter<RoomModel,  GitReposAdapter.ItemLayoutV
             }
         }
 
-        fun bind(item: RoomModel) = with(binding){
+        fun bind(item: PostDto) = with(binding){
             gitItem = item
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ItemLayoutViewHolder(
-            ItemLayoutBinding.inflate(
+            PostItemLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -40,12 +39,12 @@ class GitReposAdapter: PagingDataAdapter<RoomModel,  GitReposAdapter.ItemLayoutV
     }
 
 
-    object ItemComp: DiffUtil.ItemCallback<RoomModel>() {
-        override fun areItemsTheSame(oldItem:  RoomModel, newItem:  RoomModel) =
+    object ItemComp: DiffUtil.ItemCallback<PostDto>() {
+        override fun areItemsTheSame(oldItem:  PostDto, newItem:  PostDto) =
             oldItem.id == newItem.id
 
         @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem:  RoomModel, newItem:  RoomModel) =
+        override fun areContentsTheSame(oldItem:  PostDto, newItem:  PostDto) =
             oldItem == newItem
     }
 

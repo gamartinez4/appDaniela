@@ -4,16 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.Room
+import com.example.appdaniela.models.CommentDto
 import com.example.appdaniela.models.RemoteKey
-import com.example.appdaniela.models.RoomModel
+import com.example.appdaniela.models.PostDto
+import com.example.appdaniela.models.UserDto
+import com.example.appdaniela.utils.roomDb.daos.CommentDao
 import com.example.appdaniela.utils.roomDb.daos.RemoteKeyDao
-import com.example.appdaniela.utils.roomDb.daos.RoomModelDao
+import com.example.appdaniela.utils.roomDb.daos.PostDao
+import com.example.appdaniela.utils.roomDb.daos.UserDao
 
-@Database(version = 1, entities = [RoomModel::class, RemoteKey::class])
+@Database(version = 1, entities = [PostDto::class, UserDto::class, CommentDto::class,RemoteKey::class])
 abstract class DataBaseProject : RoomDatabase() {
 
-    abstract fun getRoomModelDao(): RoomModelDao
-    abstract fun getKeysDao(): RemoteKeyDao
+    abstract fun getPostDao(): PostDao
+    abstract fun getUserDao(): UserDao
+    abstract fun getCommentDao(): CommentDao
+    abstract fun getKeyDao(): RemoteKeyDao
 
     companion object {
         fun buildDatabase(context: Context):DataBaseProject =

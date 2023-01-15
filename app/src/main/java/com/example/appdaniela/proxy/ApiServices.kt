@@ -17,13 +17,9 @@ interface ApiServices {
     ): Response<ArrayList<Post>>
 
     @GET("comments")
-    suspend fun getComments(
-        @Query("postId")postId:String = "0",
-    ): Response<ArrayList<Comment>>
+    suspend fun getComments(): Response<ArrayList<Comment>>
 
     @GET("users")
-    suspend fun getUsers(
-        @Query("id")id:String = "0",
-    ): Response<ArrayList<User>>
+    suspend fun getUsers(): Response<ArrayList<User>>
 
 }

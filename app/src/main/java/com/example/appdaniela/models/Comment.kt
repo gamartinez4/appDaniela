@@ -1,3 +1,3 @@
 package com.example.appdaniela.models
 
-data class Comment(val body:String)
+data class Comment(val id:String, val postId: String, val body:String)

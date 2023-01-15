@@ -28,7 +28,7 @@
 
         <argument
             android:name="gitItemArg"
-            app:argType="com.example.appdaniela.models.RoomModel" />
+            app:argType="com.example.appdaniela.models.PostDto" />
     </fragment>
 
 </navigation>

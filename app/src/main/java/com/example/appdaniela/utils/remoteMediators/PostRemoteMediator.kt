@@ -1,31 +1,30 @@
-package com.example.appdaniela.utils.pagerSources
+package com.example.appdaniela.utils.remoteMediators
 
 import android.util.Log
 import androidx.paging.*
 import com.example.appdaniela.models.*
-import com.example.appdaniela.remote.IntroRepoDataSource
+import com.example.appdaniela.remote.IntroDataSource
 import com.example.appdaniela.utils.roomDb.daos.RemoteKeyDao
-import com.example.appdaniela.utils.roomDb.daos.RoomModelDao
-import com.example.appdaniela.viewModels.IntroViewModel
+import com.example.appdaniela.utils.roomDb.daos.PostDao
 import retrofit2.HttpException
 import java.io.IOException
 
 
 
 @ExperimentalPagingApi
-class PagerMediator(
-    private val roomModelDao: RoomModelDao,
+class PostRemoteMediator(
+    private val postDtoDao: PostDao,
     private val remoteKeyDao: RemoteKeyDao,
-    private val introRepoDataSource: IntroRepoDataSource,
+    private val introRepoDataSource: IntroDataSource,
     private val deleteNoneFavouriteItemsFun:()->Boolean,
     private val setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit
-) : RemoteMediator<Int, RoomModel>(){
+) : RemoteMediator<Int, PostDto>(){
 
     override suspend fun initialize(): InitializeAction = InitializeAction.LAUNCH_INITIAL_REFRESH
 
 
     override suspend fun load(
-        loadType: LoadType, state: PagingState<Int, RoomModel>
+        loadType: LoadType, state: PagingState<Int, PostDto>
     ): MediatorResult {
         val offset = when (val pageKeyData = getKeyPageData(loadType, state)) {
             is MediatorResult.Success -> {
@@ -43,7 +42,7 @@ class PagerMediator(
                 var isEndOfList = false
                 when (response) {
 
-                    is Result.Success -> {
+                    is Results.Success -> {
                         //   if (loadType == LoadType.REFRESH) {
                         //     roomModelDao.deleteAll()
                         //   remoteKeyDao.deleteAll()
@@ -55,9 +54,9 @@ class PagerMediator(
                             RemoteKey(it.id, prevKey = prevKey, nextKey = nextKey)
                         }
                         remoteKeyDao.insertAll(keys)
-                        roomModelDao.insertAll(modelsList.map { it.gitRepListInfo2RoomModel() })
+                        postDtoDao.insertAll(modelsList.map { it.post2postDto() })
                     }
-                    is Result.Failure -> {
+                    is Results.Failure -> {
                         Log.e("TransactionsMediator", response.exception.toString())
                         isEndOfList = true
                     }
@@ -74,7 +73,7 @@ class PagerMediator(
         }
     }
 
-    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, RoomModel>): Any {
+    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, PostDto>): Any {
         return when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -95,7 +94,7 @@ class PagerMediator(
         }
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int,RoomModel>): RemoteKey? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int,PostDto>): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
                 remoteKeyDao.remoteKeysId(repoId)
@@ -103,14 +102,14 @@ class PagerMediator(
         }
     }
 
-    private suspend fun getLastRemoteKey(state: PagingState<Int, RoomModel>): RemoteKey? {
+    private suspend fun getLastRemoteKey(state: PagingState<Int, PostDto>): RemoteKey? {
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()
             ?.let { element -> remoteKeyDao.remoteKeysId(element.id) }
     }
 
-    private suspend fun getFirstRemoteKey(state: PagingState<Int, RoomModel>): RemoteKey? {
+    private suspend fun getFirstRemoteKey(state: PagingState<Int, PostDto>): RemoteKey? {
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()

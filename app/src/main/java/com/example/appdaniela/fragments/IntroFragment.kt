@@ -6,21 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import com.example.appdaniela.R
 import com.example.appdaniela.databinding.FragmentIntroBinding
 import com.example.appdaniela.viewModels.IntroViewModel
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appdaniela.MainActivity
-import com.example.appdaniela.adapters.GitReposAdapter
+import com.example.appdaniela.adapters.PostAdapter
 import com.example.appdaniela.adapters.PagingLoadStateAdapter
-import com.example.appdaniela.models.RoomModel
+import com.example.appdaniela.models.PostDto
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,8 +27,8 @@ class IntroFragment : Fragment() {
 
     private val introViewModel:IntroViewModel by viewModel()
 
-    private val adapter = GitReposAdapter()
-    private val pagingDataObserver = Observer<PagingData<RoomModel>> { handlePagingData(it) }
+    private val adapter = PostAdapter()
+    private val pagingDataObserver = Observer<PagingData<PostDto>> { handlePagingData(it) }
     private lateinit var binding: FragmentIntroBinding
 
     override fun onCreateView(
@@ -45,9 +43,9 @@ class IntroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerGitRepos.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerPost.layoutManager = LinearLayoutManager(requireContext())
         with(adapter){
-            binding.recyclerGitRepos.adapter = withLoadStateHeaderAndFooter(
+            binding.recyclerPost.adapter = withLoadStateHeaderAndFooter(
                 header = PagingLoadStateAdapter(this),
                 footer = PagingLoadStateAdapter(this)
             )
@@ -57,7 +55,7 @@ class IntroFragment : Fragment() {
         }
 
         if((activity as MainActivity).fisrtEnter){
-            introViewModel.getListRepost()
+            introViewModel.setPagingPostData()
             (activity as MainActivity).fisrtEnter = false
         }
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -66,15 +64,16 @@ class IntroFragment : Fragment() {
             }
         }
         startObserver()
-
+        introViewModel.getCommentsFromApi()
+        introViewModel.getUsersFromApi()
         binding.refresh.setOnClickListener{
-            introViewModel.deleteAllItems()
-            introViewModel.deleteAllKeys()
+            introViewModel.deleteAllPostsOfDataBase()
+            introViewModel.deleteAllKeysOfDatabase()
             adapter.refresh()
         }
         binding.clear.setOnClickListener {
             introViewModel.deleteNoneFavouriteFlag = true
-            introViewModel.deleteNoneFavouritesItems()
+            introViewModel.deleteNoneFavouritesPostsOfDataBase()
         }
     }
 
@@ -82,12 +81,10 @@ class IntroFragment : Fragment() {
         introViewModel.pagingData.observe(viewLifecycleOwner, pagingDataObserver)
     }
 
-    private fun handlePagingData(pagingData: PagingData<RoomModel>){
+    private fun handlePagingData(pagingData: PagingData<PostDto>){
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.submitData(pagingData)
         }
     }
-
-
 
 }

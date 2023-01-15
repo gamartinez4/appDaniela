@@ -9,16 +9,24 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val introModule = module {
-    factory { GetListGitReposAPI(get()) }
+    factory { SetPagingPostDataAPI(get()) }
     factory { DeleteNoneFavouriteItemsLocal(get()) }
-    factory { DeleteAllItemsLocal(get()) }
+    factory { DeleteAllPostsLocal(get()) }
     factory { DeleteAllKeysLocal(get()) }
-    viewModel { IntroViewModel(get(),get(),get(),get()) }
+    factory { SetCommentsLocal(get()) }
+    factory { GetAllCommentsAPI(get()) }
+    factory { GetAllUsersAPI(get()) }
+    factory { SetUsersLocal(get()) }
+    factory { DeleteUserLocal(get()) }
+    viewModel { IntroViewModel(get(),get(),get(),get(),get(),get(),get(),get()) }
 }
 
 val detailsModule = module {
-    factory { SetRoomModelLocal(get()) }
-    viewModel { DetailsViewModel(get()) }
+    factory { SetPostDtoLocal(get()) }
+    factory { SetPagingCommentDataAPI(get()) }
+    factory { GetUserFromUserIdLocal(get()) }
+    factory {  }
+    viewModel { DetailsViewModel(get(),get(),get(),get()) }
 }
 
 fun appComponent(baseUrlApiWallet: String, context: Context): List<Module> {

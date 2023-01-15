@@ -4,18 +4,20 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "roomModel")
-data class RoomModel(
+@Entity(tableName = "posts")
+data class PostDto(
     @PrimaryKey(autoGenerate = false) var id: String = "",
     var title:String = "",
     var body:String = "",
+    var userId:String = "",
     var favourite:Boolean = false,
 ):Serializable
 
-fun Post.gitRepListInfo2RoomModel():RoomModel{
-    return RoomModel(
+fun Post.post2postDto():PostDto{
+    return PostDto(
         id = id,
         title = title?:"" ,
-        body = body?:""
+        body = body?:"",
+        userId = userId?:""
     )
 }

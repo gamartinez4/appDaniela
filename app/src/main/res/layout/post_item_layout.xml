@@ -5,7 +5,7 @@
    <data>
        <variable
            name="gitItem"
-           type="com.example.appdaniela.models.RoomModel" />
+           type="com.example.appdaniela.models.PostDto" />
        <import type="android.view.View"/>
    </data>
 
@@ -38,8 +38,8 @@
                 android:id="@+id/title_film"
                 style="@style/subtexto_solic"
                 android:layout_width="180dp"
-                android:layout_height="38dp"
-                android:text="@{`id: `+gitItem.id +`\n\n`+ `title: `+gitItem.title}"
+                android:layout_height="wrap_content"
+                android:text="@{`id: `+gitItem.id +`\n`+ `title: `+gitItem.title}"
                 app:layout_constraintBottom_toBottomOf="@+id/card_item"
                 app:layout_constraintEnd_toEndOf="@+id/card_item"
                 app:layout_constraintHorizontal_bias="0.284"

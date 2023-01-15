@@ -1,16 +1,11 @@
 package com.example.appdaniela.koinModules
 
-import android.content.Context
-import androidx.room.Room
 import com.example.appdaniela.proxy.ApiServices
-import com.example.appdaniela.remote.IntroRepoDataSource
-import com.example.appdaniela.utils.roomDb.DataBaseProject
+import com.example.appdaniela.remote.IntroDataSource
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,7 +18,7 @@ fun createRemoteModule(
     single { createRetrofit(get(), baseUrl) }
     single { createOkHttpClient(false) }
 
-    factory { IntroRepoDataSource(get()) }
+    factory { IntroDataSource(get()) }
 }
 
 fun createService(retrofit: Retrofit): ApiServices {
