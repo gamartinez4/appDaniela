@@ -3,7 +3,6 @@ package com.example.appdaniela.viewModel
 import androidx.paging.PagingData
 import com.example.appdaniela.domain.*
 import com.example.appdaniela.models.PostDto
-import com.example.appdaniela.repository.interfaces.DetailsRepository
 import com.example.appdaniela.repository.interfaces.IntroRepository
 import com.example.appdaniela.viewModels.IntroViewModel
 import com.nhaarman.mockitokotlin2.given
@@ -39,9 +38,9 @@ class IntroViewModelTest {
     var mainCoroutineRule =
         MainCoroutineRule()
 
-    private lateinit var setPagingPostDataAPI: SetPagingPostDataAPI
-    private lateinit var deleteNoneFavouriteItemsLocal: DeleteNoneFavouriteItemsLocal
-    private lateinit var deleteAllPostsLocal: DeleteAllPostsLocal
+    private lateinit var setPagingPostDataAPI: SetPagingFoodDataAPI
+    private lateinit var deleteNoneFavouriteItemsLocal: DeleteNoneFavouriteFoodsLocal
+    private lateinit var deleteAllPostsLocal: DeleteAllFoodsLocal
     private lateinit var deleteAllKeysLocal : DeleteAllKeysLocal
     private lateinit var setCommentsLocal :SetCommentsLocal
     private lateinit var getAllCommentsAPI : GetAllCommentsAPI
@@ -54,9 +53,9 @@ class IntroViewModelTest {
 
     @Before
     fun setUp() {
-        setPagingPostDataAPI = SetPagingPostDataAPI(introRepository)
-        deleteNoneFavouriteItemsLocal = DeleteNoneFavouriteItemsLocal(introRepository)
-        deleteAllPostsLocal = DeleteAllPostsLocal(introRepository)
+        setPagingPostDataAPI = SetPagingFoodDataAPI(introRepository)
+        deleteNoneFavouriteItemsLocal = DeleteNoneFavouriteFoodsLocal(introRepository)
+        deleteAllPostsLocal = DeleteAllFoodsLocal(introRepository)
         deleteAllKeysLocal = DeleteAllKeysLocal(introRepository)
         setCommentsLocal = SetCommentsLocal(introRepository)
         getAllCommentsAPI = GetAllCommentsAPI(introRepository)

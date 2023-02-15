@@ -1,47 +1,39 @@
 package com.example.appdaniela.viewModels
 
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.appdaniela.domain.*
-import com.example.appdaniela.models.CommentDto
+import com.example.appdaniela.models.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.example.appdaniela.models.PostDto
-import com.example.appdaniela.models.Results
-import com.example.appdaniela.models.UserDto
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class IntroViewModel(
-    private val setPagingPostDataAPI:SetPagingPostDataAPI,
-    private val deleteNoneFavouriteItemsLocal: DeleteNoneFavouriteItemsLocal,
-    private val deleteAllPostsLocal: DeleteAllPostsLocal,
+    private val setPagingFoodDataAPI:SetPagingFoodDataAPI,
+    private val deleteNoneFavouriteFoodsLocal: DeleteNoneFavouriteFoodsLocal,
+    private val deleteAllFoodsLocal: DeleteAllFoodsLocal,
     private val deleteAllKeysLocal: DeleteAllKeysLocal,
-    private val getAllCommentsAPI: GetAllCommentsAPI,
-    private val setCommentsLocal: SetCommentsLocal,
-    private val getAllUsersAPI: GetAllUsersAPI,
-    private val setUsersLocal: SetUsersLocal
     ): ViewModel()
 {
 
     var deleteNoneFavouriteFlag = false
 
-    private val _pagingData = MutableLiveData<PagingData<PostDto>>()
-    val pagingData: LiveData<PagingData<PostDto>>
+    private val _pagingData = MutableLiveData<PagingData<FoodModDto>>()
+    val pagingData: LiveData<PagingData<FoodModDto>>
         get() = _pagingData
 
     fun setPagingPostData(){
         viewModelScope.launch(Dispatchers.IO) {
-           setPagingPostDataAPI.execute({deleteNoneFavouriteFlag},{deleteNoneFavouriteFlag = it})
+           setPagingFoodDataAPI.execute({deleteNoneFavouriteFlag},{deleteNoneFavouriteFlag = it})
                .cachedIn(this)
                .distinctUntilChanged()
                .collectLatest { validatePagingPostsResult(it) }
         }
     }
 
-    private fun validatePagingPostsResult(result:PagingData<PostDto>){
+    private fun validatePagingPostsResult(result:PagingData<FoodModDto>){
         viewModelScope.launch(Dispatchers.Main) {
             _pagingData.value = result
         }
@@ -50,13 +42,13 @@ class IntroViewModel(
     fun deleteNoneFavouritesPostsOfDataBase(){
         deleteNoneFavouriteFlag = true
         viewModelScope.launch(Dispatchers.IO) {
-            deleteNoneFavouriteItemsLocal.execute()
+            deleteNoneFavouriteFoodsLocal.execute()
         }
     }
 
     fun deleteAllPostsOfDataBase(){
         viewModelScope.launch(Dispatchers.IO) {
-            deleteAllPostsLocal.execute()
+            deleteAllFoodsLocal.execute()
         }
     }
 
@@ -66,50 +58,5 @@ class IntroViewModel(
         }
     }
 
-    fun getCommentsFromApi(){
-        viewModelScope.launch(Dispatchers.IO) {
-            getAllCommentsAPI.execute().let {
-                validateGetCommentsFromApi(it)
-            }
-        }
-    }
-
-    private fun validateGetCommentsFromApi(results: Results<List<CommentDto>>) {
-        when (results) {
-            is Results.Success -> insertAllCommentsToDataBase(results.data)
-            is Results.Failure -> {
-                Log.e("error",results.exception.toString())
-            }
-        }
-    }
-
-    private fun insertAllCommentsToDataBase(comments: List<CommentDto>){
-        viewModelScope.launch(Dispatchers.IO) {
-                setCommentsLocal.execute(comments)
-        }
-    }
-
-    fun getUsersFromApi(){
-        viewModelScope.launch(Dispatchers.IO) {
-            getAllUsersAPI.execute().let {
-                validateGetUsersFromApi(it)
-            }
-        }
-    }
-
-    private fun validateGetUsersFromApi(results: Results<List<UserDto>>) {
-        when (results) {
-            is Results.Success -> insertAllUsersToDataBase(results.data)
-            is Results.Failure -> {
-                Log.e("error",results.exception.toString())
-            }
-        }
-    }
-
-    private fun insertAllUsersToDataBase(comments: List<UserDto>){
-        viewModelScope.launch(Dispatchers.IO) {
-            setUsersLocal.execute(comments)
-        }
-    }
 
 }

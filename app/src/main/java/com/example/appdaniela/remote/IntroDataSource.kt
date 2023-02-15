@@ -7,10 +7,10 @@ import java.lang.Exception
 
 class IntroDataSource (private val apiServices: ApiServices){
 
-    suspend fun getPosts(start:String):Results<ArrayList<Post>>{
+    suspend fun getFoods():Results<ArrayList<Food>>{
         try {
-            apiServices.getPosts(start = start).run {
-                return if (isSuccessful && body() != null) Results.Success(body() as ArrayList<Post>)
+            apiServices.getPosts().run {
+                return if (isSuccessful && body() != null) Results.Success((body() as FoodMod).foods as ArrayList<Food>)
                 else Results.Failure(Exception(parseError(errorBody()).message))
             }
         }catch (e: Exception) {
@@ -18,29 +18,4 @@ class IntroDataSource (private val apiServices: ApiServices){
         }
     }
 
-    suspend fun getComments(): Results<List<CommentDto>> {
-        try {
-            apiServices.getComments().run {
-                return if (isSuccessful && body() != null) Results.Success(
-                    (body() as ArrayList<Comment>).map { it.comment2commentDto() }
-                )
-                else Results.Failure(Exception(parseError(errorBody()).message))
-            }
-        }catch (e: Exception) {
-            return Results.Failure(e)
-        }
-    }
-
-    suspend fun getUsers(): Results<List<UserDto>> {
-        try {
-            apiServices.getUsers().run {
-                return if (isSuccessful && body() != null) Results.Success(
-                    (body() as ArrayList<User>).map { it.user2userDto() }
-                )
-                else Results.Failure(Exception(parseError(errorBody()).message))
-            }
-        }catch (e: Exception) {
-            return Results.Failure(e)
-        }
-    }
 }

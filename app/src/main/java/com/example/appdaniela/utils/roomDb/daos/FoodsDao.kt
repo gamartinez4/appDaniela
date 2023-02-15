@@ -5,25 +5,25 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.appdaniela.models.PostDto
+import com.example.appdaniela.models.FoodModDto
 
 @Dao
-interface PostDao {
+interface FoodsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(posts: List<PostDto>)
+    suspend fun insertAll(posts: List<FoodModDto>)
 
-    @Query("UPDATE posts SET favourite=:favourite WHERE id = :id")
+    @Query("UPDATE foods SET favourite=:favourite WHERE id = :id")
     suspend fun insertElement(favourite:Boolean, id:String)
 
-    @Query("SELECT * FROM posts ORDER BY favourite DESC")
-    fun getAll(): PagingSource<Int, PostDto>
+    @Query("SELECT * FROM foods ORDER BY favourite DESC")
+    fun getAll(): PagingSource<Int, FoodModDto>
 
-    @Query("DELETE FROM posts")
+    @Query("DELETE FROM foods")
     suspend fun deleteAll()
 
-    @Query("DELETE FROM posts WHERE favourite = 0")
+    @Query("DELETE FROM foods WHERE favourite = 0")
     suspend fun deleteAllNoneFavourite()
 
-    @Query("DELETE FROM posts WHERE id = :id")
+    @Query("DELETE FROM foods WHERE id = :id")
     suspend fun deletePost(id:String)
 }

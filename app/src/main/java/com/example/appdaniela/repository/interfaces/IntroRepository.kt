@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.appdaniela.models.*
+import com.example.appdaniela.utils.roomDb.daos.FoodsDao
 import kotlinx.coroutines.flow.Flow
 
 interface IntroRepository {
@@ -17,13 +18,6 @@ interface IntroRepository {
     suspend fun setPagingPostData(
         deleteNoneFavouriteItemsFun:()->Boolean,
         setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit
-    ): Flow<PagingData<PostDto>>
+    ): Flow<PagingData<FoodModDto>>
 
-    suspend fun getUsers():Results<List<UserDto>>
-
-    suspend fun setUsers(users:List<UserDto>)
-
-    suspend fun getComments(): Results<List<CommentDto>>
-
-    suspend fun setComments(comments:List<CommentDto>)
 }

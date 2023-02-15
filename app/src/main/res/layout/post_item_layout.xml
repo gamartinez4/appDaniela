@@ -5,7 +5,7 @@
    <data>
        <variable
            name="gitItem"
-           type="com.example.appdaniela.models.PostDto" />
+           type="com.example.appdaniela.models.FoodModDto" />
        <import type="android.view.View"/>
    </data>
 
@@ -39,7 +39,7 @@
                 style="@style/subtexto_solic"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:text="@{`title: `+gitItem.title}"
+                android:text="@{`title: `+gitItem.name}"
                 app:layout_constraintBottom_toBottomOf="@+id/card_item"
                 app:layout_constraintEnd_toEndOf="@+id/card_item"
                 app:layout_constraintHorizontal_bias="0.284"

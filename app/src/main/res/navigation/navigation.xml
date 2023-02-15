@@ -28,7 +28,7 @@
 
         <argument
             android:name="gitItemArg"
-            app:argType="com.example.appdaniela.models.PostDto" />
+            app:argType="com.example.appdaniela.models.FoodsModDto" />
     </fragment>
 
 </navigation>
