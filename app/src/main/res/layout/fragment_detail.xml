@@ -30,7 +30,8 @@
                     android:textSize="15dp"
                     app:layout_constraintStart_toStartOf="@+id/title_details"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="@{viewModel.selectedValue.favourite?`Quitar de favoritos`:`Añadir a favoritos`}"
+                    android:text="@{
+                    viewModel.selectedValue.favourite?`Quitar de favoritos`:`Añadir a favoritos`}"
                     tools:text="Añadir a favoritos" />
 
                 <ImageView
