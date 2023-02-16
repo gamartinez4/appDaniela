@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.appdaniela.domain.DeleteFoodLocal
 import com.example.appdaniela.domain.SetFoodDtoLocal
 import com.example.appdaniela.models.DetailsUI
+import com.example.appdaniela.models.FoodModDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -19,7 +20,18 @@ class DetailsViewModel(
     val uiModel: LiveData<DetailsUI>
         get() = _uiModel
 
+    val selectedValue = MutableLiveData<FoodModDto?>()
 
+    fun setFavouriteValueForPost(){
+        selectedValue.value = selectedValue.value?.apply {
+            this.favourite = !this.favourite
+            this
+        }
+        updateDtoFavouriteFromPostIdToDataBase(
+            selectedValue.value!!.favourite,
+            selectedValue.value!!.id
+        )
+    }
 
     fun deleteFoodFromFoodList(id:String){
         viewModelScope.launch(Dispatchers.Main) {

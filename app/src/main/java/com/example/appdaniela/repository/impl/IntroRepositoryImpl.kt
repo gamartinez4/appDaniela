@@ -5,7 +5,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.appdaniela.models.FoodModDto
-import com.example.appdaniela.models.Results
 import com.example.appdaniela.remote.IntroDataSource
 import com.example.appdaniela.repository.interfaces.IntroRepository
 import com.example.appdaniela.utils.remoteMediators.PostRemoteMediator
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 class IntroRepositoryImpl(
     private val foodsDao: FoodsDao,
     private val remoteKeyDao: RemoteKeyDao,
-    private val introRepoDataSource: IntroDataSource
+    private val introDataSource: IntroDataSource
 ) : IntroRepository{
 
     override suspend fun deleteAllPosts() {
@@ -43,7 +42,7 @@ class IntroRepositoryImpl(
                 PostRemoteMediator(
                     foodsDao,
                     remoteKeyDao,
-                    introRepoDataSource,
+                    introDataSource,
                     deleteNoneFavouriteItemsFun,
                     setDeleteNoneFavouriteItemsFlag
                 ),

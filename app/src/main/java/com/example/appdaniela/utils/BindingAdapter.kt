@@ -14,7 +14,6 @@ import com.example.appdaniela.R
 
 @BindingAdapter("android:loadImage")
 fun imageUrlLoad(imageView: ImageView,url:String){
-
     imageView.setBackgroundResource(0)
     Glide.with(imageView).load(url).into(imageView)
 }

@@ -36,9 +36,12 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         startObserver()
 
-
         binding.erasePost.setOnClickListener {
             detailsViewModel.deleteFoodFromFoodList(args.gitItemArg.id)
+        }
+
+        binding.favouriteBoton.setOnClickListener {
+            detailsViewModel.setFavouriteValueForPost()
         }
     }
 

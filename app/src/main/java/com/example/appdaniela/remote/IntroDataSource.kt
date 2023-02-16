@@ -1,5 +1,6 @@
 package com.example.appdaniela.remote
 
+import android.util.Log
 import com.example.appdaniela.models.*
 import com.example.appdaniela.proxy.ApiServices
 import com.example.appdaniela.proxy.handlers.parseError

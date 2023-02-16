@@ -7,6 +7,6 @@ import retrofit2.http.GET
 interface ApiServices {
 
     @GET("foods")
-    suspend fun getPosts(): Response<ArrayList<FoodMod>>
+    suspend fun getPosts(): Response<FoodMod>
 
 }
