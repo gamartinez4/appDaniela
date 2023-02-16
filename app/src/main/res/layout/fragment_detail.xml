@@ -48,18 +48,18 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
-                    android:text="@{`Nombre de usuario:\n`+viewModel.selectedValue.name}"
+                    android:text="@{viewModel.selectedValue.name}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/title_post"
-                     android:layout_width="300dp"
+                    android:layout_width="300dp"
                     android:layout_marginTop="20dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@{`Titulo del post:\n`+viewModel.selectedValue.description}"
+                    android:text="@{`Descripcion:\n`+viewModel.selectedValue.description}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_details" />

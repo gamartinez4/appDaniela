@@ -35,7 +35,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startObserver()
-
+        detailsViewModel.selectedValue.value = args.gitItemArg
         binding.erasePost.setOnClickListener {
             detailsViewModel.deleteFoodFromFoodList(args.gitItemArg.id)
         }
