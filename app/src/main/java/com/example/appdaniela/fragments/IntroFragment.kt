@@ -71,7 +71,6 @@ class IntroFragment : Fragment() {
             adapter.refresh()
         }
         binding.clear.setOnClickListener {
-            introViewModel.deleteNoneFavouriteFlag = true
             introViewModel.deleteNoneFavouritesPostsOfDataBase()
         }
     }
