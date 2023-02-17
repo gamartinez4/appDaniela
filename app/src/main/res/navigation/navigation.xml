@@ -26,9 +26,29 @@
         android:name="com.example.appdaniela.fragments.DetailFragment"
         tools:layout="@layout/fragment_detail">
 
+        <action
+            android:id="@+id/action_intro_to_detail"
+            app:destination="@id/map_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
         <argument
             android:name="gitItemArg"
             app:argType="com.example.appdaniela.models.FoodModDto" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/map_fragment"
+        android:label="MapFragment"
+        android:name="com.example.appdaniela.fragments.MapFragment"
+        tools:layout="@layout/fragment_map">
+
+        <argument
+            android:name="gitItemArg"
+            app:argType="com.example.appdaniela.models.FoodModDto" />
+
     </fragment>
 
 </navigation>

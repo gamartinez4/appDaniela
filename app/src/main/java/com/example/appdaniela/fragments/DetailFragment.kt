@@ -43,6 +43,11 @@ class DetailFragment : Fragment() {
         binding.favouriteBoton.setOnClickListener {
             detailsViewModel.setFavouriteValueForPost()
         }
+        binding.gps.setOnClickListener{
+            findNavController().navigate(
+                IntroFragmentDirections.actionIntroToDetail(args.gitItemArg)
+            )
+        }
     }
 
     private fun startObserver() {

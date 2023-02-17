@@ -16,6 +16,6 @@ data class Food(
 
 data class Coordinates(
     val lat:String,
-    val alt:String,
+    val lon:String,
 )
 
