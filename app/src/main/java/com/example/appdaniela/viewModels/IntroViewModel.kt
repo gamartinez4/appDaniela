@@ -1,5 +1,6 @@
 package com.example.appdaniela.viewModels
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -15,6 +16,7 @@ class IntroViewModel(
     private val deleteNoneFavouriteFoodsLocal: DeleteNoneFavouriteFoodsLocal,
     private val deleteAllFoodsLocal: DeleteAllFoodsLocal,
     private val deleteAllKeysLocal: DeleteAllKeysLocal,
+    private val changeNotifyFilterLocal: ChangeNotifyFilterLocal
     ): ViewModel()
 {
 
@@ -24,9 +26,15 @@ class IntroViewModel(
     val pagingData: LiveData<PagingData<FoodModDto>>
         get() = _pagingData
 
+    val filterValue = MutableLiveData ("")
+
     fun setPagingPostData(){
         viewModelScope.launch(Dispatchers.IO) {
-           setPagingFoodDataAPI.execute({deleteNoneFavouriteFlag},{deleteNoneFavouriteFlag = it})
+           setPagingFoodDataAPI.execute(
+               {deleteNoneFavouriteFlag},
+               {deleteNoneFavouriteFlag = it},
+               {filterValue.value!!}
+           )
                .cachedIn(this)
                .distinctUntilChanged()
                .collectLatest { validatePagingPostsResult(it) }
@@ -56,6 +64,17 @@ class IntroViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             deleteAllKeysLocal.execute()
         }
+    }
+
+    private fun changeNotifyFilter(value:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            changeNotifyFilterLocal.execute(value)
+        }
+    }
+
+    fun fieldTextChanged(charSequence: CharSequence, idField: Int) {
+        filterValue.value = charSequence.toString()
+        changeNotifyFilter(filterValue.value.toString())
     }
 
 

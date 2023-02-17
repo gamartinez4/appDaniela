@@ -13,7 +13,8 @@ val introModule = module {
     factory { DeleteNoneFavouriteFoodsLocal(get()) }
     factory { DeleteAllFoodsLocal(get()) }
     factory { DeleteAllKeysLocal(get()) }
-    viewModel { IntroViewModel(get(),get(),get(),get()) }
+    factory { ChangeNotifyFilterLocal(get()) }
+    viewModel { IntroViewModel(get(),get(),get(),get(),get()) }
 }
 
 val detailsModule = module {

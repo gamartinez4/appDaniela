@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface IntroRepository {
 
+    suspend fun changeNotifyFilter(filter:String)
+
     suspend fun deleteAllPosts()
 
     suspend fun deleteAllKeys()
@@ -17,7 +19,8 @@ interface IntroRepository {
 
     suspend fun setPagingPostData(
         deleteNoneFavouriteItemsFun:()->Boolean,
-        setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit
+        setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit,
+        setFilterValue: ()->String
     ): Flow<PagingData<FoodModDto>>
 
 }

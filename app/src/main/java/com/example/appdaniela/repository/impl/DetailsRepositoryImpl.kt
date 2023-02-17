@@ -10,7 +10,7 @@ class DetailsRepositoryImpl(
 ) : DetailsRepository {
 
     override suspend fun setFood(favourite:Boolean, id:String) {
-        postDtoDao.insertElement(favourite,id)
+        postDtoDao.updateElementByFavourite(favourite,id)
     }
 
     override suspend fun deleteFood(id:String){

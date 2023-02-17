@@ -30,23 +30,31 @@ class IntroRepositoryImpl(
         foodsDao.deleteAllNoneFavourite()
     }
 
+    override suspend fun changeNotifyFilter(filter:String) {
+        foodsDao.toNotifyChanges(filter)
+    }
+
 
     @ExperimentalPagingApi
     override suspend fun setPagingPostData(
             deleteNoneFavouriteItemsFun:()->Boolean,
-            setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit)
+            setDeleteNoneFavouriteItemsFlag:(value:Boolean)->Unit,
+            setFilterValue: ()->String
+    )
     : Flow<PagingData<FoodModDto>> {
         return Pager(
             config = PagingConfig(pageSize = 10, prefetchDistance = 30),
             remoteMediator =
-                PostRemoteMediator(
+                 PostRemoteMediator(
                     foodsDao,
                     remoteKeyDao,
                     introDataSource,
                     deleteNoneFavouriteItemsFun,
                     setDeleteNoneFavouriteItemsFlag
                 ),
-            pagingSourceFactory = { foodsDao.getAll() }
+            pagingSourceFactory = {
+                foodsDao.getAll(setFilterValue())
+            }
         ).flow
     }
 

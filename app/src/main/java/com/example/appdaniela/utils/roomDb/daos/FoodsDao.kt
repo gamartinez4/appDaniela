@@ -13,10 +13,13 @@ interface FoodsDao {
     suspend fun insertAll(posts: List<FoodModDto>)
 
     @Query("UPDATE foods SET favourite=:favourite WHERE id = :id")
-    suspend fun insertElement(favourite:Boolean, id:String)
+    suspend fun updateElementByFavourite(favourite:Boolean, id:String)
 
-    @Query("SELECT * FROM foods ORDER BY favourite DESC")
-    fun getAll(): PagingSource<Int, FoodModDto>
+    @Query("UPDATE foods SET change = :filter WHERE id = 1")
+    suspend fun toNotifyChanges(filter:String)
+
+    @Query("SELECT * FROM foods WHERE name LIKE '%' || :filter || '%' ORDER BY favourite DESC")
+    fun getAll(filter:String): PagingSource<Int, FoodModDto>
 
     @Query("DELETE FROM foods")
     suspend fun deleteAll()

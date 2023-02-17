@@ -37,6 +37,7 @@ class IntroFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_intro, container, false)
         binding.lifecycleOwner = this
+        binding.viewModel = introViewModel
         return binding.root
     }
 

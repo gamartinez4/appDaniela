@@ -14,7 +14,8 @@ data class FoodModDto(
     val description: String,
     var favourite: Boolean = false,
     val lat: String,
-    val lon: String
+    val lon: String,
+    var change:String = ""
 ):Serializable
 
 fun Food.foodMod2foodModDto():FoodModDto{
