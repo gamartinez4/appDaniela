@@ -27,7 +27,7 @@ class PostRemoteMediator(
         loadType: LoadType, state: PagingState<Int, FoodModDto>
     ): MediatorResult {
         try {
-            if ((loadType == LoadType.REFRESH && remoteKeyDao.isEmpty()) && (loadType != LoadType.APPEND)) {
+            if ((loadType == LoadType.REFRESH && remoteKeyDao.isEmpty()) ) {
                 setDeleteNoneFavouriteItemsFlag(false)
                 val response = introRepoDataSource.getFoods()
                 var isEndOfList = false

@@ -15,7 +15,7 @@ interface FoodsDao {
     @Query("UPDATE foods SET favourite=:favourite WHERE id = :id")
     suspend fun updateElementByFavourite(favourite:Boolean, id:String)
 
-    @Query("UPDATE foods SET change = :filter WHERE id = 1")
+    @Query("UPDATE foods SET change = :filter")
     suspend fun toNotifyChanges(filter:String)
 
     @Query("SELECT * FROM foods WHERE name LIKE '%' || :filter || '%' ORDER BY favourite DESC")
